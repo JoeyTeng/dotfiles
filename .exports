@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Environment variables
+
+# Basic check
+if [[ ! $HOME ]]; then
+    echo "No HOME directory specified. Quit"
+    exit
+else
+    echo "No change: \$HOME = $HOME"
+fi
+
+# XDG Base Directory Specification
+# See: https://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
+if [[ ! $XDG_CONFIG_HOME ]]; then
+    export XDG_CONFIG_HOME="$HOME/.config/"
+    echo "Set        \$XDG_CONFIG_HOME = $XDG_CONFIG_HOME"
+else
+    echo "No change: \$XDG_CONFIG_HOME = $XDG_CONFIG_HOME"
+fi
+
