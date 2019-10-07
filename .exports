@@ -2,19 +2,29 @@
 # Environment variables
 
 # Basic check
+echo "- Basic check"
 if [[ ! $HOME ]]; then
-    echo "No HOME directory specified. Quit"
+    echo "  - No HOME directory specified. Quit"
     exit
 else
-    echo "No change: \$HOME = $HOME"
+    echo "  - No change: \$HOME = $HOME"
 fi
 
 # XDG Base Directory Specification
 # See: https://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
+echo "- XDG Base Directory Specification"
 if [[ ! $XDG_CONFIG_HOME ]]; then
     export XDG_CONFIG_HOME="$HOME/.config/"
-    echo "Set        \$XDG_CONFIG_HOME = $XDG_CONFIG_HOME"
+    echo "  - Set        \$XDG_CONFIG_HOME = $XDG_CONFIG_HOME"
 else
-    echo "No change: \$XDG_CONFIG_HOME = $XDG_CONFIG_HOME"
+    echo "  - No change: \$XDG_CONFIG_HOME = $XDG_CONFIG_HOME"
 fi
 
+# Oh My Zsh
+echo "- Oh My Zsh"
+if [[ ! $ZSH ]]; then
+    export ZSH="`pwd`/oh-my-zsh"
+    echo "  - Set        \$ZSH = $ZSH"
+else
+    echo "  - No change: \$ZSH = $ZSH"
+fi
