@@ -81,6 +81,19 @@ install_oh_my_zsh() {
 
 install_gnupg() {
     $PKG_INSTALL gpg
+    # reference: https://stackoverflow.com/questions/39494631/gpg-failed-to-sign-the-data-fatal-failed-to-write-commit-object-git-2-10-0
+    if [[ `uname -s` == "Darwin" ]]; then
+        $PKG_MANAGER link --overwrite gnupg
+        $PKG_INSTALL pinentry-mac
+
+        GNUPGHOME="$XDG_CONFIG_HOME/gnupg"
+
+        mkdir -p "$GNUPGHOME"
+        echo "pinentry-program `which pinentry-mac`" >> "$GNUPGHOME/gpg-agent.conf"
+        echo "# for GPG config path" >> "$HOME/.zshrc"
+        echo "export GNUPGHOME=\"$GNUPGHOME\"" >> "$HOME/.zshrc"
+        killall gpg-agent
+    fi
 }
 
 install_git() {
