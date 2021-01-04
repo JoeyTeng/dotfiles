@@ -79,11 +79,54 @@ install_oh_my_zsh() {
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended
 }
 
+install_gnupg() {
+    $PKG_INSTALL gpg
+}
+
+install_git() {
+    $PKG_INSTALL git
+}
+
+setup_zshrc() {
+    echo "Setting up ~/.zshrc..."
+    echo "export XDG_CONFIG_HOME=\"$XDG_CONFIG_HOME\"" >> "$HOME/.zshrc"
+    cat ".zshrc_addon" >> "$HOME/.zshrc"
+}
+
+copy_over_XDG() {
+    echo "Copying over XDG Configs"
+    /bin/cp -rv "git" "$XDG_CONFIG_HOME/"
+}
+
 install() {
     echo "Installing..."
     check_pkg_manager
     prepare_pkg_manager
-    install_oh_my_zsh
+
+    press_y_to_confirm "install oh-my-zsh"
+    if [[ $? -ne 0 ]]; then
+        install_oh_my_zsh
+    fi
+
+    press_y_to_confirm "install gnupg"
+    if [[ $? -ne 0 ]]; then
+        install_gnupg
+    fi
+
+    press_y_to_confirm "install git"
+    if [[ $? -ne 0 ]]; then
+        install_git
+    fi
+
+    press_y_to_confirm "setup ~/.zshrc"
+    if [[ $? -ne 0 ]]; then
+        setup_zshrc
+    fi
+
+    press_y_to_confirm "copy over XDG_CONFIG_HOME files"
+    if [[ $? -ne 0 ]]; then
+        copy_over_XDG
+    fi
 }
 
 uninstall() {
@@ -99,6 +142,12 @@ parse_argument() {
             (uninstall)
                 uninstall
                 ;;
+            (setup_zshrc)
+                setup_zshrc
+                ;;
+            (copy_over_XDG)
+                copy_over_XDG
+                ;;
         esac
     done
 }
@@ -107,7 +156,7 @@ parse_argument() {
 parse() {
     if [[ $# == 0 ]]; then
         echo "Enter a number to choose:"
-        select action in install uninstall; do
+        select action in install uninstall setup_zshrc copy_over_XDG; do
             parse_argument $action
 	    break
 	done
