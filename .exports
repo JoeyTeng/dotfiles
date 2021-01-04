@@ -23,7 +23,7 @@ fi
 # Oh My Zsh
 echo "- Oh My Zsh"
 if [[ ! $ZSH ]]; then
-    export ZSH="`pwd`/oh-my-zsh"
+    export ZSH="$XDG_CONFIG_HOME/oh-my-zsh"
     echo "  - Set        \$ZSH = $ZSH"
 else
     echo "  - No change: \$ZSH = $ZSH"
