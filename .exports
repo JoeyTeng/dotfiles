@@ -14,7 +14,7 @@ fi
 # See: https://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
 echo "- XDG Base Directory Specification"
 if [[ ! $XDG_CONFIG_HOME ]]; then
-    export XDG_CONFIG_HOME="$HOME/.config/"
+    export XDG_CONFIG_HOME="$HOME/.config"
     echo "  - Set        \$XDG_CONFIG_HOME = $XDG_CONFIG_HOME"
 else
     echo "  - No change: \$XDG_CONFIG_HOME = $XDG_CONFIG_HOME"
