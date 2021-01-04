@@ -87,6 +87,14 @@ install_git() {
     $PKG_INSTALL git
 }
 
+install_npm() {
+    $PKG_INSTALL npm
+}
+
+install_commitizen() {
+    npm install -g commitizen
+}
+
 setup_zshrc() {
     echo "Setting up ~/.zshrc..."
     echo "export XDG_CONFIG_HOME=\"$XDG_CONFIG_HOME\"" >> "$HOME/.zshrc"
@@ -116,6 +124,17 @@ install() {
     press_y_to_confirm "install git"
     if [[ $? -ne 0 ]]; then
         install_git
+    fi
+
+    press_y_to_confirm "install npm"
+    if [[ $? -ne 0 ]]; then
+	install_npm
+    fi
+    
+
+    press_y_to_confirm "install commitizen (git cz)"
+    if [[ $? -ne 0 ]]; then
+	install_commitizen
     fi
 
     press_y_to_confirm "setup ~/.zshrc"
