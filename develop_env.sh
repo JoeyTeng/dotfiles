@@ -25,3 +25,14 @@ install_flutter() {
     fi
 }
 
+install_mongodb() {
+    echo "Install MongoDB using $PKG_MANAGER"
+    if [[ "$PKG_MANAGER" == "brew" ]]; then
+        brew tap mongodb/brew
+        $PKG_INSTALL mongodb-community@4.4
+    else
+        echo "This script cannot handle installation with $PKG_MANAGER, returning..."
+        return -1
+    fi
+}
+
